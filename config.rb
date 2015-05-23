@@ -3,9 +3,17 @@
 ###
 
 # Change Compass configuration
-# compass_config do |config|
-#   config.output_style = :compact
-# end
+compass_config do |config|
+  # Require any additional compass plugins here.
+  config.add_import_path 'bower_components/foundation/scss'
+
+  # Set this to the root of your project when deployed:
+  config.http_path = '/'
+  config.css_dir = 'stylesheets'
+  config.sass_dir = 'stylesheets'
+  config.images_dir = 'images'
+  config.javascripts_dir = 'javascripts'
+end
 
 ###
 # Page options, layouts, aliases and proxies
@@ -46,6 +54,12 @@
 #     "Helping"
 #   end
 # end
+
+# Add bower's directory to sprockets asset path
+after_configuration do
+  @bower_config = JSON.parse(IO.read("#{root}/.bowerrc"))
+  sprockets.append_path File.join "#{root}", @bower_config['directory']
+end
 
 set :css_dir, 'stylesheets'
 
